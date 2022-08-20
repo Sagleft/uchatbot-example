@@ -3,12 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
+	"time"
 
 	"github.com/Sagleft/uchatbot-engine"
+	coingecko "github.com/superoo7/go-gecko/v3"
 )
 
 const (
-	configJSONPath = "config.json"
+	configJSONPath             = "config.json"
+	dataProviderConnectTimeout = 5 * time.Second
 )
 
 func main() {
@@ -16,6 +20,7 @@ func main() {
 
 	err := checkErrors(
 		app.parseConfig,
+		app.dataProviderConnect,
 		app.initBot,
 	)
 	if err != nil {
@@ -58,4 +63,11 @@ func (app *solution) initBot() error {
 
 func (app *solution) onError(err error) {
 	fmt.Println(err)
+}
+
+func (app *solution) dataProviderConnect() error {
+	app.DataProvider = coingecko.NewClient(&http.Client{
+		Timeout: dataProviderConnectTimeout,
+	})
+	return nil
 }
