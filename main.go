@@ -71,3 +71,12 @@ func (app *solution) dataProviderConnect() error {
 	})
 	return nil
 }
+
+func (app *solution) getCryptonPrice() (float32, error) {
+	data, err := app.DataProvider.SimpleSinglePrice("utopia", "usd")
+	if err != nil {
+		return 0, err
+	}
+
+	return data.MarketPrice, nil
+}
