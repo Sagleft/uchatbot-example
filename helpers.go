@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"os"
+	"strconv"
 )
 
 type errorFunc func() error
@@ -30,4 +31,8 @@ func (app *solution) parseConfig() error {
 		return err
 	}
 	return json.Unmarshal(jsonBytes, &app.Config)
+}
+
+func formatFloat(val float64, precision int) string {
+	return strconv.FormatFloat(val, 'f', precision, 32)
 }

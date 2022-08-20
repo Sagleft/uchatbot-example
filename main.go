@@ -62,7 +62,7 @@ func (app *solution) initBot() error {
 }
 
 func (app *solution) onError(err error) {
-	fmt.Println(err)
+	log.Println(err)
 }
 
 func (app *solution) dataProviderConnect() error {
